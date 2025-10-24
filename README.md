@@ -318,3 +318,5 @@ For support and questions:
 ---
 
 **Built with ❤️ using Next.js, NestJS, MongoDB, and AWS**
+
+<!-- Updated: 2025-10-24 - Fixed AWS Account ID in task definitions -->
