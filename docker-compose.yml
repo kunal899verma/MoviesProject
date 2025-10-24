@@ -1,43 +1,62 @@
 version: '3.8'
 
 services:
+  mongodb:
+    image: mongo:7.0
+    container_name: movie-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: movie-management
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - movie-network
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    container_name: movie-backend
+    restart: unless-stopped
     ports:
       - "3001:3001"
     environment:
       - NODE_ENV=production
-      - MONGODB_URI=mongodb://mongo:27017/movie-management
+      - MONGODB_URI=mongodb://admin:password123@mongodb:27017/movie-management?authSource=admin
       - JWT_SECRET=your-super-secret-jwt-key-here
+      - UPLOAD_DEST=./uploads
       - PORT=3001
     depends_on:
-      - mongo
+      - mongodb
     volumes:
       - ./backend/uploads:/app/uploads
-    restart: unless-stopped
+    networks:
+      - movie-network
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    container_name: movie-frontend
+    restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
+      - NODE_ENV=production
       - NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
       - BACKEND_URL=http://localhost:3001
     depends_on:
       - backend
-    restart: unless-stopped
-
-  mongo:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-    restart: unless-stopped
+    networks:
+      - movie-network
 
 volumes:
-  mongo_data:
+  mongodb_data:
+
+networks:
+  movie-network:
+    driver: bridge

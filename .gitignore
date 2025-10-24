@@ -12,10 +12,18 @@ yarn-error.log*
 .env.production.local
 
 # Build outputs
-dist/
-build/
 .next/
 out/
+dist/
+build/
+
+# Database
+*.db
+*.sqlite
+
+# Uploads
+uploads/
+public/uploads/
 
 # Logs
 logs/
@@ -97,25 +105,13 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-# Uploads directory (backend)
-backend/uploads/
-
-# PM2 logs
-logs/
-
-# Docker
-.dockerignore
-
 # AWS
 .aws/
 
-# Terraform
-*.tfstate
-*.tfstate.*
-.terraform/
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
 
-# Local development
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# PM2
+.pm2/

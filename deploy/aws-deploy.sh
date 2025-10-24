@@ -93,3 +93,4 @@ echo "1. Update your frontend environment variables"
 echo "2. Configure your domain name"
 echo "3. Set up SSL certificates"
 echo "4. Configure MongoDB Atlas for production"
+

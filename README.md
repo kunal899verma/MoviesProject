@@ -4,77 +4,38 @@ A full-stack movie management application built with Next.js, NestJS, and MongoD
 
 ## 🚀 Live Demo
 
-- **Frontend**: [Deployed on Vercel](https://your-app.vercel.app)
-- **Backend**: [Deployed on AWS](https://your-api.aws.com)
-- **API Documentation**: [Swagger Docs](https://your-api.aws.com/api/docs)
+- **Frontend**: [https://your-frontend-domain.com](https://your-frontend-domain.com)
+- **Backend API**: [https://your-backend-domain.com](https://your-backend-domain.com)
 
 ## 📋 Features
 
-### ✅ Authentication & Security
-- **JWT Authentication**: Secure token-based authentication
-- **User Registration/Login**: Complete auth flow
-- **Protected Routes**: Secure API endpoints
-- **Password Hashing**: bcrypt encryption
-
-### 🎬 Movie Management
-- **CRUD Operations**: Create, Read, Update, Delete movies
-- **Image Upload**: Poster image management
-- **Search & Filter**: Search by title and filter by year
-- **Pagination**: Efficient data loading
-
-### 📱 User Experience
-- **Responsive Design**: Mobile-first approach
-- **Modern UI**: Clean, intuitive interface
-- **Real-time Updates**: Instant feedback
-- **Error Handling**: Comprehensive error management
+- **User Authentication**: JWT-based login/register system
+- **Movie Management**: CRUD operations for movies
+- **Image Upload**: Poster upload functionality
+- **Search & Filter**: Search movies by title and filter by year
+- **Pagination**: Efficient movie listing with pagination
+- **Responsive Design**: Mobile-first responsive UI
+- **Real-time Updates**: Dynamic UI updates
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Next.js 14**: React framework with App Router
-- **TypeScript**: Type-safe development
-- **Tailwind CSS**: Utility-first styling
-- **Redux Toolkit**: State management
-- **React Hook Form**: Form handling
-- **Zod**: Schema validation
+- **Next.js 14** - React framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **Redux Toolkit** - State management
+- **React Hook Form** - Form handling
+- **Zod** - Validation
+- **Lucide React** - Icons
 
 ### Backend
-- **NestJS**: Node.js framework
-- **MongoDB**: NoSQL database
-- **Mongoose**: ODM for MongoDB
-- **JWT**: Authentication tokens
-- **Multer**: File upload handling
-- **Swagger**: API documentation
-
-### Deployment
-- **Frontend**: Vercel
-- **Backend**: AWS EC2
-- **Database**: MongoDB Atlas
-- **File Storage**: AWS S3
-
-## 🏗️ Project Structure
-
-```
-MoviesProject/
-├── frontend/                 # Next.js Frontend
-│   ├── src/
-│   │   ├── app/             # App Router pages
-│   │   ├── components/      # Reusable components
-│   │   ├── store/           # Redux store
-│   │   └── lib/             # Utilities
-│   ├── public/              # Static assets
-│   └── package.json
-├── backend/                  # NestJS Backend
-│   ├── src/
-│   │   ├── auth/            # Authentication module
-│   │   ├── movies/        # Movies module
-│   │   ├── users/         # Users module
-│   │   └── main.ts        # Application entry
-│   └── package.json
-├── docker-compose.yml       # Local development
-├── .github/                 # GitHub Actions
-└── README.md
-```
+- **NestJS** - Node.js framework
+- **MongoDB** - Database
+- **Mongoose** - ODM
+- **JWT** - Authentication
+- **Passport** - Authentication strategy
+- **Multer** - File uploads
+- **Swagger** - API documentation
 
 ## 🚀 Quick Start
 
@@ -83,7 +44,7 @@ MoviesProject/
 - MongoDB
 - Git
 
-### Local Development
+### Installation
 
 1. **Clone the repository**
 ```bash
@@ -96,6 +57,7 @@ cd MoviesProject
 cd backend
 npm install
 cp env.example .env
+# Update .env with your MongoDB URI and JWT secret
 npm run start:dev
 ```
 
@@ -104,17 +66,13 @@ npm run start:dev
 cd frontend
 npm install
 cp .env.example .env.local
+# Update .env.local with your backend URL
 npm run dev
 ```
 
-4. **Access the application**
-- Frontend: http://localhost:3000
-- Backend: http://localhost:3001
-- API Docs: http://localhost:3001/api/docs
+### Environment Variables
 
-## 🔧 Environment Variables
-
-### Backend (.env)
+#### Backend (.env)
 ```env
 MONGODB_URI=mongodb://localhost:27017/movie-management
 JWT_SECRET=your-super-secret-jwt-key-here
@@ -123,13 +81,35 @@ PORT=3001
 NODE_ENV=development
 ```
 
-### Frontend (.env.local)
+#### Frontend (.env.local)
 ```env
 NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
 BACKEND_URL=http://localhost:3001
 ```
 
-## 📱 API Endpoints
+## 📁 Project Structure
+
+```
+MoviesProject/
+├── backend/                 # NestJS API
+│   ├── src/
+│   │   ├── auth/           # Authentication module
+│   │   ├── movies/         # Movies module
+│   │   ├── users/          # Users module
+│   │   └── main.ts         # Application entry point
+│   ├── uploads/            # File uploads directory
+│   └── package.json
+├── frontend/               # Next.js application
+│   ├── src/
+│   │   ├── app/           # App router pages
+│   │   ├── components/    # Reusable components
+│   │   ├── store/         # Redux store
+│   │   └── lib/           # Utilities
+│   └── package.json
+└── README.md
+```
+
+## 🔧 API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - User registration
@@ -137,66 +117,96 @@ BACKEND_URL=http://localhost:3001
 - `GET /api/auth/me` - Get current user
 
 ### Movies
-- `GET /api/movies` - Get movies (with pagination, search, filter)
-- `POST /api/movies` - Create movie
+- `GET /api/movies` - Get movies with pagination
+- `POST /api/movies` - Create new movie
 - `GET /api/movies/:id` - Get movie by ID
 - `PATCH /api/movies/:id` - Update movie
 - `DELETE /api/movies/:id` - Delete movie
 - `POST /api/movies/upload-poster` - Upload movie poster
 
+## 🎨 Design System
+
+### Colors
+- **Primary**: #2BD17E
+- **Error**: #EB5757
+- **Background**: #093545
+- **Input**: #224957
+- **Card**: #092C39
+
+### Typography
+- **Font**: Montserrat
+- **Headings**: 48px-64px
+- **Body**: 14px-20px
+- **Weights**: 400, 500, 600, 700
+
 ## 🚀 Deployment
 
-### Frontend (Vercel)
-1. Connect GitHub repository to Vercel
-2. Set environment variables in Vercel dashboard
-3. Deploy automatically on push to main branch
+### AWS Deployment
 
-### Backend (AWS EC2)
-1. Launch EC2 instance
-2. Install Node.js and PM2
-3. Clone repository and install dependencies
-4. Configure environment variables
-5. Start application with PM2
+#### Frontend (Vercel/Netlify)
+1. Connect your GitHub repository
+2. Set environment variables
+3. Deploy automatically
 
-### Database (MongoDB Atlas)
-1. Create MongoDB Atlas cluster
-2. Configure network access
-3. Update connection string in environment variables
+#### Backend (AWS EC2/Elastic Beanstalk)
+1. Create EC2 instance
+2. Install Node.js and MongoDB
+3. Clone repository
+4. Set environment variables
+5. Start application
 
-## 🧪 Testing
-
+### Docker Deployment
 ```bash
-# Backend tests
-cd backend
-npm run test
-
-# Frontend tests
-cd frontend
-npm run test
+# Build and run with Docker Compose
+docker-compose up -d
 ```
 
-## 📊 Performance
+## 📱 Features
 
-- **Lighthouse Score**: 90+ (Performance)
-- **Bundle Size**: Optimized with code splitting
-- **API Response**: < 200ms average
-- **Database**: Efficient MongoDB queries
+### Authentication
+- ✅ JWT-based authentication
+- ✅ Secure password hashing
+- ✅ Protected routes
+- ✅ Auto-logout on token expiry
+
+### Movie Management
+- ✅ Add new movies
+- ✅ Edit movie details
+- ✅ Delete movies
+- ✅ Upload movie posters
+- ✅ Search and filter
+- ✅ Pagination
+
+### UI/UX
+- ✅ Responsive design
+- ✅ Loading states
+- ✅ Error handling
+- ✅ Toast notifications
+- ✅ Form validation
 
 ## 🔒 Security
 
-- **JWT Authentication**: Secure token-based auth
-- **Password Hashing**: bcrypt encryption
-- **CORS Configuration**: Proper origin handling
-- **Input Validation**: Comprehensive validation
-- **Security Headers**: Helmet.js protection
+- JWT token authentication
+- Password hashing with bcrypt
+- CORS configuration
+- Input validation
+- File upload security
+- Environment variable protection
+
+## 📊 Performance
+
+- Lazy loading components
+- Image optimization
+- Bundle splitting
+- Database indexing
+- Caching strategies
 
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+4. Submit a pull request
 
 ## 📄 License
 
@@ -212,10 +222,5 @@ This project is licensed under the MIT License.
 
 - Next.js team for the amazing framework
 - NestJS team for the robust backend framework
-- MongoDB for the flexible database
-- Vercel for seamless frontend deployment
-- AWS for reliable backend hosting
-
----
-
-**🎬 Built with ❤️ by Kunal Verma**
+- MongoDB for the database solution
+- All open-source contributors
