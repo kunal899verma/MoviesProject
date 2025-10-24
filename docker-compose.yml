@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # MongoDB Database
   mongodb:
     image: mongo:7.0
     container_name: movie-mongodb
@@ -16,6 +17,7 @@ services:
     networks:
       - movie-network
 
+  # Backend API
   backend:
     build:
       context: ./backend
@@ -28,7 +30,6 @@ services:
       - NODE_ENV=production
       - MONGODB_URI=mongodb://admin:password123@mongodb:27017/movie-management?authSource=admin
       - JWT_SECRET=your-super-secret-jwt-key-here
-      - UPLOAD_DEST=./uploads
       - PORT=3001
     depends_on:
       - mongodb
@@ -37,6 +38,7 @@ services:
     networks:
       - movie-network
 
+  # Frontend
   frontend:
     build:
       context: ./frontend
@@ -46,9 +48,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
       - NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
-      - BACKEND_URL=http://localhost:3001
+      - BACKEND_URL=http://backend:3001
     depends_on:
       - backend
     networks:
