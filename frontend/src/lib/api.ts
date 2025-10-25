@@ -100,7 +100,7 @@ export const moviesAPI = {
     return response.data;
   },
 
-  uploadPoster: async (file: File) => {
+  uploadPoster: async (file: any) => {
     const formData = new FormData();
     formData.append('poster', file);
 

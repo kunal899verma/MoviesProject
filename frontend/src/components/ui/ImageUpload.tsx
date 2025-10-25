@@ -30,7 +30,7 @@ export function ImageUpload({ onImageUploaded, currentImage, uploadText = "Drop 
     }
   }, [currentImage]);
 
-  const handleFileUpload = useCallback(async (file: File) => {
+  const handleFileUpload = useCallback(async (file: any) => {
     if (!isValidImageFile(file)) {
       toast.error('Please select a valid image file (JPEG, PNG, GIF) under 5MB');
       return;

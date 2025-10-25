@@ -70,16 +70,8 @@ export const movieFormSchema = z.object({
     .or(z.literal('')),
 });
 
-// File upload schema
-export const imageFileSchema = z.object({
-  file: z
-    .instanceof(File)
-    .refine((file) => file.size <= 5 * 1024 * 1024, 'File size must be less than 5MB')
-    .refine(
-      (file) => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(file.type),
-      'Only JPEG, PNG, and GIF files are allowed'
-    ),
-});
+// File upload schema - removed File instanceof to prevent SSR issues
+// File validation is handled in utils.ts with browser environment checks
 
 // Search and filter schema
 export const searchSchema = z.object({

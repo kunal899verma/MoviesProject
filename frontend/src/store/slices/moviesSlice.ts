@@ -131,7 +131,7 @@ export const deleteMovie = createAsyncThunk(
 
 export const uploadPoster = createAsyncThunk(
   'movies/uploadPoster',
-  async (file: File, { rejectWithValue }) => {
+  async (file: any, { rejectWithValue }) => {
     try {
       const response = await moviesAPI.uploadPoster(file);
       return response;

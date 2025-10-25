@@ -18,6 +18,10 @@ const nextConfig = {
   poweredByHeader: false,
   generateEtags: false,
   swcMinify: true,
+  // Experimental features to help with SSR issues
+  experimental: {
+    forceSwcTransforms: true,
+  },
   // Security headers
   async headers() {
     return [

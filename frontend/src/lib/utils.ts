@@ -14,9 +14,14 @@ export function truncateText(text: string, maxLength: number): string {
   return text.substring(0, maxLength) + '...';
 }
 
-export function isValidImageFile(file: File): boolean {
-  // Check if we're in a browser environment
-  if (typeof window === 'undefined') {
+export function isValidImageFile(file: any): boolean {
+  // Check if we're in a browser environment and file is actually a File object
+  if (typeof window === 'undefined' || !file || typeof file !== 'object') {
+    return false;
+  }
+  
+  // Additional check to ensure it's a File-like object
+  if (!file.type || !file.size) {
     return false;
   }
   
