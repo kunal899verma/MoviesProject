@@ -12,7 +12,7 @@ env:
   ECR_REPOSITORY_FRONTEND: movie-management-frontend
   ECS_SERVICE_BACKEND: movie-backend-service
   ECS_SERVICE_FRONTEND: movie-frontend-service
-  ECS_CLUSTER: imaginary-eagle-7g4dse
+  ECS_CLUSTER: movie-management-cluster
   ECS_TASK_DEFINITION_BACKEND: movie-backend-task
   ECS_TASK_DEFINITION_FRONTEND: movie-frontend-task
   CONTAINER_NAME_BACKEND: movie-backend
