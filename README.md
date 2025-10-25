@@ -1,4 +1,4 @@
-# 🎬 Movie Management Application
+# 🎬 Movie Management Application 
 
 A full-stack movie management application built with Next.js, NestJS, MongoDB, and deployed on AWS.
 
