@@ -9,7 +9,7 @@ import { createMovie, clearError } from '@/store/slices/moviesSlice';
 import { movieFormSchema, MovieFormData } from '@/lib/validations';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { CustomInput } from '@/components/ui/CustomInput';
-import { ImageUpload } from '@/components/ui/ImageUpload';
+import { DynamicImageUpload } from '@/components/ui/DynamicImageUpload';
 import { toast } from 'react-hot-toast';
 
 export default function CreateMoviePage() {
@@ -68,7 +68,7 @@ export default function CreateMoviePage() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Image Upload */}
             <div className="space-y-4">
-              <ImageUpload
+              <DynamicImageUpload
                 onImageUploaded={handlePosterUploaded}
                 currentImage={posterValue}
                 uploadText="Drop an image here"

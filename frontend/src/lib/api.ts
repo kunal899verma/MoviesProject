@@ -12,9 +12,12 @@ const api = axios.create({
 // Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Only access localStorage in browser environment
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },
@@ -29,7 +32,10 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Token expired or invalid - clear token but don't redirect immediately
-      localStorage.removeItem('token');
+      // Only access localStorage in browser environment
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+      }
       // Let the auth system handle the redirect through ProtectedRoute
     }
     

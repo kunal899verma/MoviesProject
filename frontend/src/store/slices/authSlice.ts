@@ -28,8 +28,10 @@ export const loginUser = createAsyncThunk(
   async (credentials: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await authAPI.login(credentials);
-      // Store token in localStorage
-      localStorage.setItem('token', response.access_token);
+      // Store token in localStorage (only in browser environment)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', response.access_token);
+      }
       return response;
     } catch (error: any) {
       // Extract error message from API response
@@ -47,8 +49,10 @@ export const registerUser = createAsyncThunk(
   async (userData: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await authAPI.register(userData);
-      // Store token in localStorage
-      localStorage.setItem('token', response.access_token);
+      // Store token in localStorage (only in browser environment)
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', response.access_token);
+      }
       return response;
     } catch (error: any) {
       // Extract error message from API response
@@ -65,7 +69,7 @@ export const checkAuth = createAsyncThunk(
   'auth/checkAuth',
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       if (!token) {
         throw new Error('No token found');
       }
@@ -74,7 +78,9 @@ export const checkAuth = createAsyncThunk(
       const response = await authAPI.getCurrentUser();
       return { user: response.user, token };
     } catch (error) {
-      localStorage.removeItem('token');
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+      }
       return rejectWithValue('Authentication check failed');
     }
   }
@@ -89,7 +95,9 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
-      localStorage.removeItem('token');
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('token');
+      }
     },
       clearError: (state) => {
         state.error = null;

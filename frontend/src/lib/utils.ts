@@ -15,6 +15,11 @@ export function truncateText(text: string, maxLength: number): string {
 }
 
 export function isValidImageFile(file: File): boolean {
+  // Check if we're in a browser environment
+  if (typeof window === 'undefined') {
+    return false;
+  }
+  
   const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
   const maxSize = 5 * 1024 * 1024; // 5MB
 

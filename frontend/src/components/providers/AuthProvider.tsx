@@ -14,6 +14,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     // Small delay to ensure Redux store is fully initialized
     const timer = setTimeout(() => {
+      // Only run in browser environment
+      if (typeof window === 'undefined') {
+        dispatch(setAuthLoading(false));
+        return;
+      }
+      
       // Check auth on app load to restore authentication state from localStorage
       const token = localStorage.getItem('token');
       

@@ -10,7 +10,7 @@ import { movieFormSchema } from '@/lib/validations';
 import type { MovieFormData as MovieFormDataFromValidation } from '@/lib/validations';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { CustomInput } from '@/components/ui/CustomInput';
-import { ImageUpload } from '@/components/ui/ImageUpload';
+import { DynamicImageUpload } from '@/components/ui/DynamicImageUpload';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { ConfirmationModal } from '@/components/ui/CustomModal';
 import { toast } from 'react-hot-toast';
@@ -114,7 +114,7 @@ export default function EditMoviePage() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Image Upload */}
             <div className="space-y-4">
-              <ImageUpload
+              <DynamicImageUpload
                 onImageUploaded={handlePosterUploaded}
                 currentImage={posterValue}
                 uploadText="Drop other image here"
