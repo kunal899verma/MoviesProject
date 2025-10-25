@@ -10,8 +10,8 @@ env:
   AWS_REGION: eu-north-1
   ECR_REPOSITORY_BACKEND: movie-management-backend
   ECR_REPOSITORY_FRONTEND: movie-management-frontend
-  ECS_SERVICE_BACKEND: movie-backend-service
-  ECS_SERVICE_FRONTEND: movie-frontend-service
+  ECS_SERVICE_BACKEND: movie-backend-task-service-d8tedgl6
+  ECS_SERVICE_FRONTEND: movie-frontend-task-service-i306grln
   ECS_CLUSTER: movie-management-cluster
   ECS_TASK_DEFINITION_BACKEND: movie-backend-task
   ECS_TASK_DEFINITION_FRONTEND: movie-frontend-task
