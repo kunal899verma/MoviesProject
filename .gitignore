@@ -105,8 +105,9 @@ Thumbs.db
 uploads/
 public/uploads/
 
-# AWS
-.aws/
+# AWS credentials (keep task definitions)
+.aws/credentials
+.aws/config
 
 # Docker
 .dockerignore
