@@ -16,6 +16,8 @@ export class Movie {
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   userId: Types.ObjectId;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export const MovieSchema = SchemaFactory.createForClass(Movie);

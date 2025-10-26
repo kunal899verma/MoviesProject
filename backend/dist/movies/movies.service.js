@@ -86,6 +86,48 @@ let MoviesService = class MoviesService {
             throw new common_1.NotFoundException('Movie not found');
         }
     }
+    async getStats(userId) {
+        const userObjectId = new mongoose_2.Types.ObjectId(userId);
+        const movies = await this.movieModel
+            .find({ userId: userObjectId })
+            .select('title publishingYear createdAt')
+            .sort({ createdAt: -1 })
+            .exec();
+        if (movies.length === 0) {
+            return {
+                totalMovies: 0,
+                averageYear: 0,
+                oldestMovieYear: 0,
+                newestMovieYear: 0,
+                moviesByDecade: {},
+                recentMovies: [],
+            };
+        }
+        const years = movies.map(movie => movie.publishingYear);
+        const totalMovies = movies.length;
+        const averageYear = Math.round(years.reduce((sum, year) => sum + year, 0) / totalMovies);
+        const oldestMovieYear = Math.min(...years);
+        const newestMovieYear = Math.max(...years);
+        const moviesByDecade = {};
+        years.forEach(year => {
+            const decade = Math.floor(year / 10) * 10;
+            const decadeKey = `${decade}s`;
+            moviesByDecade[decadeKey] = (moviesByDecade[decadeKey] || 0) + 1;
+        });
+        const recentMovies = movies.slice(0, 5).map(movie => ({
+            title: movie.title,
+            publishingYear: movie.publishingYear,
+            createdAt: movie.createdAt,
+        }));
+        return {
+            totalMovies,
+            averageYear,
+            oldestMovieYear,
+            newestMovieYear,
+            moviesByDecade,
+            recentMovies,
+        };
+    }
 };
 exports.MoviesService = MoviesService;
 exports.MoviesService = MoviesService = __decorate([

@@ -22,6 +22,7 @@ const movies_service_1 = require("./movies.service");
 const create_movie_dto_1 = require("./dto/create-movie.dto");
 const update_movie_dto_1 = require("./dto/update-movie.dto");
 const query_movie_dto_1 = require("./dto/query-movie.dto");
+const movie_stats_dto_1 = require("./dto/movie-stats.dto");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 let MoviesController = class MoviesController {
     constructor(moviesService) {
@@ -35,6 +36,9 @@ let MoviesController = class MoviesController {
             filename: file.filename,
             path: `/uploads/${file.filename}`,
         };
+    }
+    getStats(req) {
+        return this.moviesService.getStats(req.user.userId);
     }
     findAll(query, req) {
         return this.moviesService.findAll(req.user.userId, query);
@@ -113,6 +117,19 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], MoviesController.prototype, "uploadPoster", null);
+__decorate([
+    (0, common_1.Get)('stats'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get user movie statistics' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Movie statistics retrieved successfully',
+        type: movie_stats_dto_1.MovieStatsDto,
+    }),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], MoviesController.prototype, "getStats", null);
 __decorate([
     (0, common_1.Get)(),
     (0, swagger_1.ApiOperation)({ summary: 'Get all user movies with pagination' }),

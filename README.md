@@ -1,322 +1,375 @@
-# 🎬 Movie Management Application 
+# 🎬 Movie Management Application
 
-A full-stack movie management application built with Next.js, NestJS, MongoDB, and deployed on AWS.
+A comprehensive full-stack movie management application built with **Next.js 14**, **NestJS**, **MongoDB**, and **TypeScript**. This application demonstrates modern web development practices, responsive design, and production-ready architecture.
 
 ## 🌟 Features
 
-- **User Authentication**: JWT-based login/register system
-- **Movie Management**: CRUD operations for movies
-- **Image Upload**: Poster image upload and management
-- **Search & Filter**: Search movies by title and filter by year
-- **Pagination**: Efficient pagination for large movie lists
-- **Responsive Design**: Mobile-friendly interface
-- **Production Ready**: Optimized for production deployment
+### 🔐 **Authentication & Security**
+- **JWT-based Authentication** with secure token management
+- **User Registration & Login** with form validation
+- **Protected Routes** with automatic redirection
+- **Password Security** with bcrypt hashing
+- **Session Management** with Redux persistence
 
-## 🏗️ Architecture
+### 🎭 **Movie Management**
+- **Complete CRUD Operations** (Create, Read, Update, Delete)
+- **Image Upload** for movie posters with file validation
+- **Search Functionality** by movie title
+- **Year-based Filtering** with dropdown selection
+- **Advanced Pagination** with page navigation
+- **Movie Statistics** with analytics dashboard
 
-### Frontend (Next.js)
+### 📱 **User Experience**
+- **Fully Responsive Design** optimized for all devices
+- **Mobile-First Approach** with Tailwind CSS
+- **Real-time Form Validation** with Zod schema validation
+- **Loading States** and error handling
+- **Toast Notifications** for user feedback
+- **Accessibility Features** with ARIA labels and semantic HTML
+
+### 🚀 **Performance & Architecture**
+- **Server-Side Rendering** with Next.js App Router
+- **State Management** with Redux Toolkit
+- **Lazy Loading** for optimal performance
+- **Image Optimization** with Next.js Image component
+- **TypeScript** for type safety
+- **API Documentation** with Swagger/OpenAPI
+
+## 🏗️ Technical Architecture
+
+### **Frontend Stack**
 - **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
 - **Styling**: Tailwind CSS with custom design system
-- **State Management**: Redux Toolkit
+- **State Management**: Redux Toolkit with RTK Query
 - **Forms**: React Hook Form with Zod validation
-- **UI Components**: Custom reusable components
-- **Authentication**: JWT token management
+- **UI Components**: Custom reusable component library
+- **Icons**: Lucide React
+- **Notifications**: React Hot Toast
 
-### Backend (NestJS)
+### **Backend Stack**
 - **Framework**: NestJS with TypeScript
 - **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT with Passport
+- **Authentication**: JWT with Passport.js
 - **Validation**: Class-validator and DTOs
-- **File Upload**: Multer for image handling
-- **Security**: Helmet, CORS, input validation
+- **File Upload**: Multer with local storage
+- **Documentation**: Swagger/OpenAPI
+- **Security**: Helmet, CORS, input sanitization
 
-### Database (MongoDB)
-- **Collections**: Users, Movies
-- **Indexing**: Optimized queries
-- **Validation**: Schema validation
-- **Security**: User authentication
+### **Database Schema**
+- **Users Collection**: Authentication and user management
+- **Movies Collection**: Movie data with user relationships
+- **Indexing**: Optimized queries for performance
+- **Validation**: Mongoose schema validation
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+
-- MongoDB
-- Git
+- **Node.js** 18+ 
+- **MongoDB** (local installation or Atlas)
+- **npm** or **yarn**
 
-### Local Development
+### 1. Clone Repository
+```bash
+git clone https://github.com/kunal899verma/MoviesProject.git
+cd MoviesProject
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/kunal899verma/MoviesProject.git
-   cd MoviesProject
-   ```
+### 2. Backend Setup
+```bash
+cd backend
+npm install
 
-2. **Backend Setup**
-   ```bash
-   cd backend
-   npm install
-   cp env.example .env
-   npm run start:dev
-   ```
+# Copy environment file
+cp env.example .env
 
-3. **Frontend Setup**
-   ```bash
-   cd frontend
-   npm install
-   echo "NEXT_PUBLIC_BACKEND_URL=http://localhost:3001" > .env.local
-   npm run dev
-   ```
+# Update .env with your MongoDB URI and JWT secret
+# MONGODB_URI=mongodb://localhost:27017/movie-management
+# JWT_SECRET=your-super-secret-jwt-key-here
 
-4. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:3001
-   - API Docs: http://localhost:3001/api/docs
+# Start development server
+npm run start:dev
+```
 
-## 🐳 Docker Deployment
+### 3. Frontend Setup
+```bash
+cd frontend
+npm install
 
-### Using Docker Compose
+# Copy environment file
+cp .env.example .env.local
 
-1. **Clone and setup**
-   ```bash
-   git clone https://github.com/kunal899verma/MoviesProject.git
-   cd MoviesProject
-   ```
+# Update .env.local with backend URL
+# NEXT_PUBLIC_API_URL=http://localhost:3001/api
 
-2. **Start all services**
-   ```bash
-   docker-compose up -d
-   ```
+# Start development server
+npm run dev
+```
 
-3. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend: http://localhost:3001
-   - MongoDB: localhost:27017
+### 4. Access Application
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:3001/api
+- **API Documentation**: http://localhost:3001/api/docs
+
+## 🐳 Docker Development
+
+### Using Docker Compose (Recommended)
+```bash
+# Start all services (MongoDB, Backend, Frontend)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
 
 ### Individual Services
-
-**Backend only:**
 ```bash
+# Backend only
 cd backend
 docker build -t movie-backend .
 docker run -p 3001:3001 movie-backend
-```
 
-**Frontend only:**
-```bash
-cd frontend
+# Frontend only
+cd frontend  
 docker build -t movie-frontend .
 docker run -p 3000:3000 movie-frontend
 ```
 
-## ☁️ AWS Deployment
+## 📱 API Documentation
 
-### Option 1: AWS CloudFormation (Recommended)
+### Authentication Endpoints
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/me` - Get current user profile
 
-1. **Deploy using CloudFormation**
-   ```bash
-   aws cloudformation create-stack \
-     --stack-name movie-management-app \
-     --template-body file://aws-deploy.yml \
-     --parameters ParameterKey=KeyPairName,ParameterValue=your-key-pair \
-     --capabilities CAPABILITY_IAM
-   ```
+### Movies Endpoints
+- `GET /api/movies` - Get movies with pagination, search, and filters
+- `POST /api/movies` - Create new movie
+- `GET /api/movies/:id` - Get specific movie
+- `PATCH /api/movies/:id` - Update movie
+- `DELETE /api/movies/:id` - Delete movie
+- `POST /api/movies/upload-poster` - Upload movie poster
+- `GET /api/movies/stats` - Get user movie statistics
 
-2. **Get the Load Balancer DNS**
-   ```bash
-   aws cloudformation describe-stacks \
-     --stack-name movie-management-app \
-     --query 'Stacks[0].Outputs'
-   ```
+### Query Parameters
+```typescript
+// Movies list endpoint supports:
+{
+  page?: number;        // Page number (default: 1)
+  limit?: number;       // Items per page (default: 8)
+  search?: string;      // Search by movie title
+  year?: number;        // Filter by publishing year
+}
+```
 
-### Option 2: AWS Elastic Beanstalk
+## 🎨 Design System
 
-1. **Backend Deployment**
-   ```bash
-   cd backend
-   zip -r backend.zip . -x node_modules/\*
-   # Upload to Elastic Beanstalk
-   ```
+### Color Palette
+```css
+Primary: #2BD17E (Green)
+Error: #EB5757 (Red)
+Background: #093545 (Dark Blue)
+Input: #224957 (Blue Gray)
+Card: #092C39 (Dark Blue)
+```
 
-2. **Frontend Deployment**
-   ```bash
-   cd frontend
-   npm run build
-   zip -r frontend.zip .next public package.json
-   # Upload to Elastic Beanstalk
-   ```
+### Typography
+- **Font Family**: Montserrat
+- **Headings**: 48px-64px (font-weight: 600-700)
+- **Body Text**: 14px-20px (font-weight: 400)
+- **Responsive**: Scales down on mobile devices
 
-### Option 3: AWS ECS with Fargate
+### Responsive Breakpoints
+- **Mobile**: < 768px
+- **Tablet**: 768px - 1024px  
+- **Desktop**: > 1024px
+- **Large Desktop**: > 1440px
 
-1. **Build and push Docker images**
-   ```bash
-   # Build backend
-   docker build -t movie-backend ./backend
-   docker tag movie-backend:latest your-account.dkr.ecr.region.amazonaws.com/movie-backend:latest
-   docker push your-account.dkr.ecr.region.amazonaws.com/movie-backend:latest
-   
-   # Build frontend
-   docker build -t movie-frontend ./frontend
-   docker tag movie-frontend:latest your-account.dkr.ecr.region.amazonaws.com/movie-frontend:latest
-   docker push your-account.dkr.ecr.region.amazonaws.com/movie-frontend:latest
-   ```
+## 🔒 Security Features
 
-2. **Create ECS cluster and services**
-   - Use the pushed images in ECS task definitions
-   - Configure load balancer and networking
+### Authentication Security
+- **JWT Tokens** with secure secret
+- **Password Hashing** with bcrypt
+- **Token Expiration** management
+- **Protected API Routes**
+
+### Input Validation
+- **Frontend Validation** with Zod schemas
+- **Backend Validation** with NestJS DTOs
+- **File Upload Security** with type and size validation
+- **XSS Protection** with input sanitization
+
+### CORS & Headers
+- **CORS Configuration** for cross-origin requests
+- **Security Headers** with Helmet
+- **CSP (Content Security Policy)**
+
+## 📊 Performance Optimizations
+
+### Frontend Optimizations
+- **Code Splitting** with dynamic imports
+- **Lazy Loading** for components and images
+- **Image Optimization** with Next.js Image
+- **Bundle Optimization** with automatic splitting
+- **Caching Strategies** for API responses
+
+### Backend Optimizations
+- **Database Indexing** for faster queries
+- **Pagination** to limit response size
+- **Query Optimization** with selective fields
+- **File Serving** with static asset optimization
+
+## 🧪 Testing
+
+### Backend Testing
+```bash
+cd backend
+npm run test           # Unit tests
+npm run test:e2e       # End-to-end tests
+npm run test:cov       # Coverage report
+```
+
+### Frontend Testing
+```bash
+cd frontend
+npm run test           # Jest tests
+npm run test:watch     # Watch mode
+npm run test:coverage  # Coverage report
+```
 
 ## 🔧 Environment Variables
 
 ### Backend (.env)
 ```bash
+# Database
 MONGODB_URI=mongodb://localhost:27017/movie-management
+
+# Authentication
 JWT_SECRET=your-super-secret-jwt-key-here
+
+# File Upload
 UPLOAD_DEST=./uploads
+
+# Server Configuration
 PORT=3001
 NODE_ENV=development
+FRONTEND_URL=http://localhost:3000
 ```
 
 ### Frontend (.env.local)
 ```bash
-NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
-BACKEND_URL=http://localhost:3001
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
+
+# App Configuration
+NEXT_PUBLIC_APP_NAME="Movie Management"
+NEXT_PUBLIC_APP_DESCRIPTION="Manage your favorite movies with ease"
+
+# Environment
+NODE_ENV=development
 ```
 
-## 📱 API Endpoints
+## 📝 Assignment Requirements Compliance
 
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-- `GET /api/auth/me` - Get current user
+### ✅ **Core Requirements Met**
+- **✅ Login Screen** - JWT authentication with validation
+- **✅ Movie Display** - Grid layout with responsive design
+- **✅ Movie Creation** - Form with image upload
+- **✅ Movie Editing** - Update functionality
+- **✅ Movie Entity** - Title, Publishing Year, Poster fields
+- **✅ Frontend & Backend** - Complete full-stack implementation
 
-### Movies
-- `GET /api/movies` - Get movies list (with pagination, search, filter)
-- `POST /api/movies` - Create new movie
-- `GET /api/movies/:id` - Get movie by ID
-- `PATCH /api/movies/:id` - Update movie
-- `DELETE /api/movies/:id` - Delete movie
-- `POST /api/movies/upload-poster` - Upload movie poster
+### ✅ **Additional Features Implemented**
+- **✅ Mobile Responsiveness** - Optimized for all screen sizes
+- **✅ Form Validation** - Comprehensive client & server validation
+- **✅ Pagination** - Advanced pagination with page numbers
+- **✅ State Management** - Redux Toolkit implementation
+- **✅ API Documentation** - Swagger/OpenAPI documentation
+- **✅ Search & Filter** - Title search and year filtering
+- **✅ File Upload** - Secure image upload with validation
+- **✅ Error Handling** - Comprehensive error management
+- **✅ Loading States** - User feedback during operations
+- **✅ Security** - Authentication, authorization, input validation
 
-## 🎨 Design System
+### 🎯 **Creative Additions**
+- **📊 Movie Statistics** - Analytics dashboard with decade breakdown
+- **🎨 Custom Design System** - Professional UI with Tailwind CSS
+- **♿ Accessibility** - ARIA labels, semantic HTML, keyboard navigation
+- **⚡ Performance** - Lazy loading, code splitting, optimizations
+- **🔧 Developer Experience** - TypeScript, ESLint, Prettier
+- **📱 Progressive Enhancement** - Works without JavaScript
+- **🚀 Production Ready** - Docker, environment configs, security headers
 
-### Colors
-- Primary: #2BD17E
-- Error: #EB5757
-- Background: #093545
-- Input: #224957
-- Card: #092C39
+## 🚀 Deployment Options
 
-### Typography
-- Font: Montserrat
-- Headings: 48px-64px
-- Body: 14px-20px
-- Weights: 400, 500, 600, 700
-
-### Spacing
-- Based on 8px grid system
-- Responsive breakpoints
-- Consistent padding/margins
-
-## 🔒 Security Features
-
-- **JWT Authentication**: Secure token-based auth
-- **Input Validation**: Comprehensive form validation
-- **CORS Protection**: Configured for production
-- **Helmet Security**: Security headers
-- **Password Hashing**: bcrypt encryption
-- **Environment Variables**: No hardcoded secrets
-
-## 📊 Performance Optimizations
-
-- **Lazy Loading**: Component-level code splitting
-- **Image Optimization**: Next.js Image component
-- **Bundle Splitting**: Automatic code splitting
-- **Database Indexing**: Optimized MongoDB queries
-- **Caching**: Efficient data caching
-- **Compression**: Gzip compression enabled
-
-## 🧪 Testing
-
-### Backend Tests
+### Local Development
 ```bash
-cd backend
-npm run test
-npm run test:e2e
+# Using npm
+npm run dev
+
+# Using Docker Compose
+docker-compose up
 ```
 
-### Frontend Tests
-```bash
-cd frontend
-npm run test
-npm run test:coverage
+### Production Deployment
+- **Docker**: Multi-stage builds for optimized images
+- **Environment**: Separate configs for dev/staging/production
+- **Security**: Production-ready security configurations
+- **Monitoring**: Health checks and logging
+
+## 📚 Project Structure
+
 ```
-
-## 📈 Monitoring & Logging
-
-### Production Monitoring
-- **Health Checks**: Built-in health endpoints
-- **Error Tracking**: Comprehensive error handling
-- **Performance Metrics**: Response time monitoring
-- **Log Management**: Structured logging
-
-### AWS CloudWatch
-- Application logs
-- Performance metrics
-- Error tracking
-- Custom dashboards
-
-## 🔄 CI/CD Pipeline
-
-### GitHub Actions
-```yaml
-name: Deploy to AWS
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to AWS
-        run: |
-          # Deploy backend
-          # Deploy frontend
-          # Run tests
+MovieProject/
+├── backend/                 # NestJS Backend
+│   ├── src/
+│   │   ├── auth/           # Authentication module
+│   │   ├── movies/         # Movies module
+│   │   ├── users/          # Users module
+│   │   └── main.ts         # Application entry point
+│   ├── uploads/            # Uploaded movie posters
+│   └── env.example         # Environment template
+├── frontend/               # Next.js Frontend
+│   ├── src/
+│   │   ├── app/           # App Router pages
+│   │   ├── components/    # Reusable UI components
+│   │   ├── lib/           # Utilities and configurations
+│   │   └── store/         # Redux state management
+│   ├── public/            # Static assets
+│   └── .env.example       # Environment template
+├── docker-compose.yml     # Local development setup
+└── README.md             # Project documentation
 ```
-
-## 📚 Documentation
-
-- **API Documentation**: Available at `/api/docs` (Swagger)
-- **Component Documentation**: Storybook (coming soon)
-- **Deployment Guide**: See `PRODUCTION_DEPLOYMENT_GUIDE.md`
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 🙋‍♂️ Author
 
-For support and questions:
-- Create an issue on GitHub
-- Check the documentation
-- Review the API docs
+**Kunal Verma**
+- **GitHub**: [@kunal899verma](https://github.com/kunal899verma)
+- **Repository**: [MoviesProject](https://github.com/kunal899verma/MoviesProject)
 
 ## 🔗 Links
 
-- **GitHub Repository**: [https://github.com/kunal899verma/MoviesProject](https://github.com/kunal899verma/MoviesProject)
-- **Live Demo**: [Coming Soon]
-- **API Documentation**: [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
+- **🌐 Live Demo**: [Coming Soon]
+- **📚 API Documentation**: http://localhost:3001/api/docs (when running locally)
+- **📱 GitHub Repository**: https://github.com/kunal899verma/MoviesProject
 
 ---
 
-**Built with ❤️ using Next.js, NestJS, MongoDB, and AWS**
+**Built with ❤️ using Next.js, NestJS, MongoDB, and modern web technologies**
 
-<!-- Updated: 2025-10-24 - Fixed AWS Account ID in task definitions -->
+*This project showcases full-stack development capabilities, responsive design, security best practices, and production-ready architecture.*

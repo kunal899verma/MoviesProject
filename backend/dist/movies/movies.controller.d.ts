@@ -2,6 +2,7 @@ import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { QueryMovieDto } from './dto/query-movie.dto';
+import { MovieStatsDto } from './dto/movie-stats.dto';
 export declare class MoviesController {
     private readonly moviesService;
     constructor(moviesService: MoviesService);
@@ -10,6 +11,7 @@ export declare class MoviesController {
         filename: string;
         path: string;
     };
+    getStats(req: any): Promise<MovieStatsDto>;
     findAll(query: QueryMovieDto, req: any): Promise<{
         data: (import("mongoose").Document<unknown, {}, import("./schemas/movie.schema").MovieDocument> & import("./schemas/movie.schema").Movie & import("mongoose").Document<any, any, any> & {
             _id: import("mongoose").Types.ObjectId;

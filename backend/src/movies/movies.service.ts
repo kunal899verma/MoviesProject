@@ -5,6 +5,7 @@ import { Movie, MovieDocument } from './schemas/movie.schema';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { QueryMovieDto } from './dto/query-movie.dto';
+import { MovieStatsDto } from './dto/movie-stats.dto';
 
 @Injectable()
 export class MoviesService {
@@ -97,5 +98,58 @@ export class MoviesService {
     if (result.deletedCount === 0) {
       throw new NotFoundException('Movie not found');
     }
+  }
+
+  async getStats(userId: string): Promise<MovieStatsDto> {
+    const userObjectId = new Types.ObjectId(userId);
+    
+    // Get all user movies for statistics
+    const movies = await this.movieModel
+      .find({ userId: userObjectId })
+      .select('title publishingYear createdAt')
+      .sort({ createdAt: -1 })
+      .exec();
+
+    if (movies.length === 0) {
+      return {
+        totalMovies: 0,
+        averageYear: 0,
+        oldestMovieYear: 0,
+        newestMovieYear: 0,
+        moviesByDecade: {},
+        recentMovies: [],
+      };
+    }
+
+    // Calculate statistics
+    const years = movies.map(movie => movie.publishingYear);
+    const totalMovies = movies.length;
+    const averageYear = Math.round(years.reduce((sum, year) => sum + year, 0) / totalMovies);
+    const oldestMovieYear = Math.min(...years);
+    const newestMovieYear = Math.max(...years);
+
+    // Group movies by decade
+    const moviesByDecade: Record<string, number> = {};
+    years.forEach(year => {
+      const decade = Math.floor(year / 10) * 10;
+      const decadeKey = `${decade}s`;
+      moviesByDecade[decadeKey] = (moviesByDecade[decadeKey] || 0) + 1;
+    });
+
+    // Get 5 most recent movies
+    const recentMovies = movies.slice(0, 5).map(movie => ({
+      title: movie.title,
+      publishingYear: movie.publishingYear,
+      createdAt: movie.createdAt,
+    }));
+
+    return {
+      totalMovies,
+      averageYear,
+      oldestMovieYear,
+      newestMovieYear,
+      moviesByDecade,
+      recentMovies,
+    };
   }
 }

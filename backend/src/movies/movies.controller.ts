@@ -27,6 +27,7 @@ import { MoviesService } from './movies.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { QueryMovieDto } from './dto/query-movie.dto';
+import { MovieStatsDto } from './dto/movie-stats.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Movies')
@@ -97,6 +98,17 @@ export class MoviesController {
       filename: file.filename,
       path: `/uploads/${file.filename}`,
     };
+  }
+
+  @Get('stats')
+  @ApiOperation({ summary: 'Get user movie statistics' })
+  @ApiResponse({ 
+    status: 200, 
+    description: 'Movie statistics retrieved successfully',
+    type: MovieStatsDto,
+  })
+  getStats(@Request() req) {
+    return this.moviesService.getStats(req.user.userId);
   }
 
   @Get()
