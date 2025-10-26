@@ -1,5 +1,7 @@
 {
+  "/register/page": "app/register/page.js",
   "/login/page": "app/login/page.js",
   "/movies/page": "app/movies/page.js",
+  "/movies/create/page": "app/movies/create/page.js",
   "/movies/[id]/edit/page": "app/movies/[id]/edit/page.js"
 }
