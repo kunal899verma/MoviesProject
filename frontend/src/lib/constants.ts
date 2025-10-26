@@ -1,4 +1,3 @@
-// App constants
 export const APP_CONFIG = {
   name: 'Movie Management',
   description: 'Manage your favorite movies with ease',
@@ -7,7 +6,6 @@ export const APP_CONFIG = {
   repository: 'https://github.com/kunal899verma/MoviesProject',
 } as const;
 
-// API endpoints
 export const API_ENDPOINTS = {
   auth: {
     login: '/auth/login',
@@ -24,21 +22,18 @@ export const API_ENDPOINTS = {
   },
 } as const;
 
-// Pagination constants
 export const PAGINATION = {
   defaultLimit: 8,
   maxLimit: 50,
   minLimit: 1,
 } as const;
 
-// File upload constants
 export const FILE_UPLOAD = {
   maxSize: 5 * 1024 * 1024, // 5MB
   allowedTypes: ['image/jpeg', 'image/png', 'image/webp'],
   allowedExtensions: ['.jpg', '.jpeg', '.png', '.webp'],
 } as const;
 
-// Movie validation constants
 export const MOVIE_VALIDATION = {
   title: {
     minLength: 1,
@@ -50,7 +45,6 @@ export const MOVIE_VALIDATION = {
   },
 } as const;
 
-// UI constants
 export const UI = {
   toastDuration: 5000,
   loadingDelay: 300,

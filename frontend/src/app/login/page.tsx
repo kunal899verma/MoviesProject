@@ -28,12 +28,10 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
-  // Remove automatic redirect - let the form submission handle it
 
   useEffect(() => {
     if (error) {
       toast.error(error);
-      // Clear error after a delay to give users time to read the message
       const timer = setTimeout(() => {
         dispatch(clearError());
       }, 5000);
@@ -44,16 +42,13 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      // Clear any existing errors before submitting
       dispatch(clearError());
       
       await dispatch(loginUser(data)).unwrap();
       toast.success('Login successful!');
       
-      // Redirect immediately after successful login
       router.push('/movies');
     } catch (error) {
-      // Error handling is done in the useEffect above
     }
   };
 

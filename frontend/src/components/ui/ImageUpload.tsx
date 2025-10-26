@@ -21,7 +21,6 @@ export function ImageUpload({ onImageUploaded, currentImage, uploadText = "Drop 
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(currentImage ? getImageUrl(currentImage) : null);
 
-  // Update preview when currentImage prop changes
   useEffect(() => {
     if (currentImage) {
       setPreviewUrl(getImageUrl(currentImage));

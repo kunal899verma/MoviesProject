@@ -59,7 +59,6 @@ export function CustomCard({
   );
 }
 
-// Specialized Movie Card Component
 export interface MovieCardProps {
   movie: {
     _id: string;

@@ -25,7 +25,6 @@ export class MoviesService {
     const { page = 1, limit = 8, search, year } = query;
     const skip = (page - 1) * limit;
 
-    // Build filter
     const filter: any = { userId: new Types.ObjectId(userId) };
     
     if (search) {
@@ -36,7 +35,6 @@ export class MoviesService {
       filter.publishingYear = year;
     }
 
-    // Execute queries in parallel
     const [movies, total] = await Promise.all([
       this.movieModel
         .find(filter)
@@ -103,7 +101,6 @@ export class MoviesService {
   async getStats(userId: string): Promise<MovieStatsDto> {
     const userObjectId = new Types.ObjectId(userId);
     
-    // Get all user movies for statistics
     const movies = await this.movieModel
       .find({ userId: userObjectId })
       .select('title publishingYear createdAt')
@@ -121,14 +118,12 @@ export class MoviesService {
       };
     }
 
-    // Calculate statistics
     const years = movies.map(movie => movie.publishingYear);
     const totalMovies = movies.length;
     const averageYear = Math.round(years.reduce((sum, year) => sum + year, 0) / totalMovies);
     const oldestMovieYear = Math.min(...years);
     const newestMovieYear = Math.max(...years);
 
-    // Group movies by decade
     const moviesByDecade: Record<string, number> = {};
     years.forEach(year => {
       const decade = Math.floor(year / 10) * 10;
@@ -136,7 +131,6 @@ export class MoviesService {
       moviesByDecade[decadeKey] = (moviesByDecade[decadeKey] || 0) + 1;
     });
 
-    // Get 5 most recent movies
     const recentMovies = movies.slice(0, 5).map(movie => ({
       title: movie.title,
       publishingYear: movie.publishingYear,

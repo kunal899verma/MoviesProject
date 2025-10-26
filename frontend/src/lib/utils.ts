@@ -15,12 +15,10 @@ export function truncateText(text: string, maxLength: number): string {
 }
 
 export function isValidImageFile(file: any): boolean {
-  // Check if we're in a browser environment and file is actually a File object
   if (typeof window === 'undefined' || !file || typeof file !== 'object') {
     return false;
   }
   
-  // Additional check to ensure it's a File-like object
   if (!file.type || !file.size) {
     return false;
   }
@@ -35,7 +33,6 @@ export function getImageUrl(path?: string): string {
   if (!path) return '/placeholder-movie.svg';
   if (path.startsWith('http')) return path;
   
-  // For uploaded images, use the backend base URL without /api prefix
   const backendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
   return `${backendBaseUrl}${path}`;
 }

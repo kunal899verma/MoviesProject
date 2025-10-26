@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { MovieFormData, MoviesQuery } from '@/store/slices/moviesSlice';
 
-// Create axios instance
 const api = axios.create({
   baseURL: '/api', // Use relative URL to leverage Next.js proxy
   headers: {
@@ -9,10 +8,8 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
-    // Only access localStorage in browser environment
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
       if (token) {
@@ -26,20 +23,15 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle auth errors
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid - clear token but don't redirect immediately
-      // Only access localStorage in browser environment
       if (typeof window !== 'undefined') {
         localStorage.removeItem('token');
       }
-      // Let the auth system handle the redirect through ProtectedRoute
     }
     
-    // Enhanced error handling for production
     if (error.response?.status >= 500) {
       console.error('Server Error:', error.response?.data?.message || 'Internal Server Error');
     }
@@ -48,7 +40,6 @@ api.interceptors.response.use(
   }
 );
 
-// Auth API
 export const authAPI = {
   login: async (credentials: { email: string; password: string }) => {
     const response = await api.post('/auth/login', credentials);
@@ -66,7 +57,6 @@ export const authAPI = {
   },
 };
 
-// Movies API
 export const moviesAPI = {
   getMovies: async (query: MoviesQuery = {}) => {
     const params = new URLSearchParams();

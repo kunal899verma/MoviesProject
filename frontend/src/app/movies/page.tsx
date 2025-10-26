@@ -10,7 +10,6 @@ import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { LoadingScreen } from '@/components/ui/LoadingScreen';
 import { toast } from 'react-hot-toast';
 
-// Lazy load heavy components
 const MovieCard = lazy(() => import('@/components/movies/MovieCard').then(module => ({ default: module.MovieCard })));
 const MoviesPagination = lazy(() => import('@/components/movies/MoviesPagination').then(module => ({ default: module.MoviesPagination })));
 const SearchBar = lazy(() => import('@/components/movies/SearchBar').then(module => ({ default: module.SearchBar })));
@@ -23,7 +22,6 @@ export default function MoviesPage() {
   const { user } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    // Only fetch movies if user is authenticated
     if (user) {
       dispatch(fetchMovies(query));
     }
@@ -51,7 +49,6 @@ export default function MoviesPage() {
     return <LoadingScreen />;
   }
 
-  // Show empty state if no movies and no search/filter applied
   if (movies.length === 0 && !query.search && !query.year) {
     return (
       <div className="min-h-screen bg-background bg-[url('/bg.png')] bg-no-repeat bg-bottom bg-[length:100%_111px] bg-fixed">

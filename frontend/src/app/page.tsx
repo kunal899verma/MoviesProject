@@ -11,8 +11,6 @@ export default function Home() {
 
   useEffect(() => {
     if (!isLoading) {
-      // Only redirect if we're actually on the root page
-      // This prevents interfering with page reloads on other routes
       if (window.location.pathname === '/') {
         if (isAuthenticated) {
           router.push('/movies');

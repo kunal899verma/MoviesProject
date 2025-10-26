@@ -27,7 +27,6 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   });
 
-  // Remove automatic redirect - let the form submission handle it
 
   useEffect(() => {
     if (error) {
@@ -45,7 +44,6 @@ export default function RegisterPage() {
       toast.success('Registration successful!');
       router.push('/movies');
     } catch (error) {
-      // Error handling is done in the useEffect above
     }
   };
 

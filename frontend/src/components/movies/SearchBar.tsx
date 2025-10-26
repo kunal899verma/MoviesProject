@@ -19,11 +19,9 @@ export function SearchBar({ onSearch, onYearFilter, currentSearch, currentYear }
   const [isYearPopupOpen, setIsYearPopupOpen] = useState(false);
   const yearPopupRef = useRef<HTMLDivElement>(null);
 
-  // Generate year options (current year to 1888)
   const currentYearValue = new Date().getFullYear();
   const yearOptions = Array.from({ length: currentYearValue - 1887 }, (_, i) => currentYearValue - i);
 
-  // Debounced search function
   const debouncedSearch = debounce((value: string) => {
     onSearch(value);
   }, 300) as (value: string) => void;
@@ -54,7 +52,6 @@ export function SearchBar({ onSearch, onYearFilter, currentSearch, currentYear }
     setIsYearPopupOpen(!isYearPopupOpen);
   };
 
-  // Close popup when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (yearPopupRef.current && !yearPopupRef.current.contains(event.target as Node)) {

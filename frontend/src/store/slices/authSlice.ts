@@ -22,19 +22,16 @@ const initialState: AuthState = {
   isAuthenticated: false,
 };
 
-// Async thunks
 export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await authAPI.login(credentials);
-      // Store token in localStorage (only in browser environment)
       if (typeof window !== 'undefined') {
         localStorage.setItem('token', response.access_token);
       }
       return response;
     } catch (error: any) {
-      // Extract error message from API response
       const errorMessage = error.response?.data?.message || 
                           error.response?.data?.error || 
                           error.message || 
@@ -49,13 +46,11 @@ export const registerUser = createAsyncThunk(
   async (userData: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await authAPI.register(userData);
-      // Store token in localStorage (only in browser environment)
       if (typeof window !== 'undefined') {
         localStorage.setItem('token', response.access_token);
       }
       return response;
     } catch (error: any) {
-      // Extract error message from API response
       const errorMessage = error.response?.data?.message || 
                           error.response?.data?.error || 
                           error.message || 
@@ -74,7 +69,6 @@ export const checkAuth = createAsyncThunk(
         throw new Error('No token found');
       }
       
-      // Verify token validity by making a test request
       const response = await authAPI.getCurrentUser();
       return { user: response.user, token };
     } catch (error) {
@@ -115,7 +109,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Login
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -134,7 +127,6 @@ const authSlice = createSlice({
         state.user = null;
         state.token = null;
       })
-      // Register
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -151,7 +143,6 @@ const authSlice = createSlice({
         state.error = action.payload as string;
         state.isAuthenticated = false;
       })
-      // Check auth
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
       })

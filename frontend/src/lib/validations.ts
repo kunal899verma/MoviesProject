@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Auth schemas
 export const loginSchema = z.object({
   email: z
     .string()
@@ -29,7 +28,6 @@ export const registerSchema = z.object({
   path: ['confirmPassword'],
 });
 
-// Movie schemas
 export const movieSchema = z.object({
   title: z
     .string()
@@ -70,10 +68,7 @@ export const movieFormSchema = z.object({
     .or(z.literal('')),
 });
 
-// File upload schema - removed File instanceof to prevent SSR issues
-// File validation is handled in utils.ts with browser environment checks
 
-// Search and filter schema
 export const searchSchema = z.object({
   search: z.string().optional(),
   year: z
@@ -94,7 +89,6 @@ export const searchSchema = z.object({
     .default(8),
 });
 
-// Type exports
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type MovieFormData = z.infer<typeof movieFormSchema>;

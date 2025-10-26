@@ -47,7 +47,6 @@ export default function CreateMoviePage() {
       toast.success('Movie created successfully!');
       router.push('/movies');
     } catch (error) {
-      // Error handling is done in the useEffect above
     }
   };
 

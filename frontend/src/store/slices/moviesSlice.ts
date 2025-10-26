@@ -57,7 +57,6 @@ const initialState: MoviesState = {
   query: { page: 1, limit: 8 },
 };
 
-// Async thunks
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
   async (query: MoviesQuery = {}, { rejectWithValue, dispatch }) => {
@@ -65,9 +64,7 @@ export const fetchMovies = createAsyncThunk(
       const response = await moviesAPI.getMovies(query);
       return response;
     } catch (error: any) {
-      // If 401 error, clear auth state
       if (error.response?.status === 401) {
-        // Import logout action dynamically to avoid circular dependency
         const { logout } = await import('./authSlice');
         dispatch(logout());
       }
@@ -163,7 +160,6 @@ const moviesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch movies
       .addCase(fetchMovies.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -178,7 +174,6 @@ const moviesSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      // Fetch single movie
       .addCase(fetchMovie.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -192,7 +187,6 @@ const moviesSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
-      // Create movie
       .addCase(createMovie.pending, (state) => {
         state.isCreating = true;
         state.error = null;
@@ -206,7 +200,6 @@ const moviesSlice = createSlice({
         state.isCreating = false;
         state.error = action.payload as string;
       })
-      // Update movie
       .addCase(updateMovie.pending, (state) => {
         state.isUpdating = true;
         state.error = null;
@@ -226,7 +219,6 @@ const moviesSlice = createSlice({
         state.isUpdating = false;
         state.error = action.payload as string;
       })
-      // Delete movie
       .addCase(deleteMovie.pending, (state) => {
         state.isDeleting = true;
         state.error = null;

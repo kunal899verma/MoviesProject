@@ -3,7 +3,6 @@
 import dynamic from 'next/dynamic';
 import { ComponentProps } from 'react';
 
-// Dynamically import ImageUpload to prevent SSR issues
 const ImageUpload = dynamic(() => import('./ImageUpload').then(mod => ({ default: mod.ImageUpload })), {
   ssr: false,
   loading: () => (

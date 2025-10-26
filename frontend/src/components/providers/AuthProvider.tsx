@@ -12,29 +12,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // Small delay to ensure Redux store is fully initialized
     const timer = setTimeout(() => {
-      // Only run in browser environment
       if (typeof window === 'undefined') {
         dispatch(setAuthLoading(false));
         return;
       }
       
-      // Check auth on app load to restore authentication state from localStorage
       const token = localStorage.getItem('token');
       
       if (token) {
         try {
-          // Decode JWT token to get user info
           const parts = token.split('.');
           if (parts.length === 3) {
             const payload = JSON.parse(atob(parts[1]));
             
-            // Check if token is not expired
             const currentTime = Math.floor(Date.now() / 1000);
             
             if (payload.exp && payload.exp > currentTime) {
-              // Token is valid, restore auth state
               dispatch(setCredentials({
                 user: { id: payload.sub, email: payload.email },
                 token: token
@@ -52,7 +46,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
           dispatch(setAuthLoading(false));
         }
       } else {
-        // No token found, set loading to false
         dispatch(setAuthLoading(false));
       }
     }, 200);

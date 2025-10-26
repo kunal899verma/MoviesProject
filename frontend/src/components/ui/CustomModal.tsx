@@ -127,7 +127,6 @@ export function CustomModal({
   );
 }
 
-// Specialized Confirmation Modal
 export interface ConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;

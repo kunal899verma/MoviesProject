@@ -79,7 +79,6 @@ export default function EditMoviePage() {
       toast.success('Movie updated successfully!');
       router.push('/movies');
     } catch (error) {
-      // Error handling is done in the useEffect above
     }
   };
 
@@ -89,7 +88,6 @@ export default function EditMoviePage() {
       toast.success('Movie deleted successfully!');
       router.push('/movies');
     } catch (error) {
-      // Error handling is done in the useEffect above
     }
   };
 

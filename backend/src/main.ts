@@ -9,7 +9,6 @@ import helmet from 'helmet';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   
-  // Security headers
   app.use(helmet({
     contentSecurityPolicy: {
       directives: {
@@ -21,7 +20,6 @@ async function bootstrap() {
     },
   }));
   
-  // Enable CORS with production support
   const allowedOrigins = process.env.NODE_ENV === 'production' 
     ? [process.env.FRONTEND_URL || 'https://yourdomain.com']
     : ['http://localhost:3000', 'http://127.0.0.1:3000'];
@@ -33,12 +31,10 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
 
-  // Serve static files (uploaded images)
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',
   });
   
-  // Global validation pipe
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
     whitelist: true,
@@ -46,7 +42,6 @@ async function bootstrap() {
     disableErrorMessages: process.env.NODE_ENV === 'production',
   }));
   
-  // Swagger documentation setup (only in development)
   if (process.env.NODE_ENV !== 'production') {
     const config = new DocumentBuilder()
       .setTitle('Movie Management API')
@@ -58,7 +53,6 @@ async function bootstrap() {
     SwaggerModule.setup('api/docs', app, document);
   }
   
-  // Global prefix
   app.setGlobalPrefix('api');
   
   const port = process.env.PORT || 3001;

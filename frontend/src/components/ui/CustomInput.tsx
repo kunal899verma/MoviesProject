@@ -37,15 +37,12 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
     const [showPassword, setShowPassword] = useState(false);
     const [internalValue, setInternalValue] = useState('');
 
-    // Use controlled value if provided, otherwise use internal state
     const inputValue = value !== undefined ? value : internalValue;
 
     const handleClear = () => {
       if (value !== undefined) {
-        // Controlled input - let parent handle the clear
         onClear?.();
       } else {
-        // Uncontrolled input - clear internal state
         setInternalValue('');
         onClear?.();
       }
@@ -53,10 +50,8 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (value !== undefined) {
-        // Controlled input - let parent handle the change
         onChange?.(e);
       } else {
-        // Uncontrolled input - update internal state
         setInternalValue(e.target.value);
         onChange?.(e);
       }
